@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "644739712023",
+    "project_id": "moa-diary-app",
+    "storage_bucket": "moa-diary-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644739712023:android:f52d480944a09509528852",
+        "android_client_info": {
+          "package_name": "com.project.moa_diary_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArYxtAP-m5eVlFgtYnZlLwOOpYHS2uMX0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
