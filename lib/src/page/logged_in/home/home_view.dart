@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:moa_diary_app/common/common.dart';
 import 'package:moa_diary_app/src/page/logged_in/home/bloc/home_page_bloc.dart';
+import 'model/model.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -10,12 +13,57 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final _tabs = HomeTabType.values;
+  int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomePageBloc, HomePageState>(
       listener: _blocListener,
       builder: (context, state) {
-        return Scaffold();
+        return Scaffold(
+          bottomNavigationBar: Container(
+            padding: const EdgeInsets.only(top: 3),
+            decoration: const BoxDecoration(
+              border: Border(
+                top: BorderSide(
+                  color: Color(0xFFDDDDDD),
+                  width: 1,
+                ),
+              )
+            ),
+            child: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              items: _tabs.map<BottomNavigationBarItem>((e) {
+                if (_tabs[_selectedIndex] == e) {
+                  return BottomNavigationBarItem(
+                    icon: SvgPicture.asset('assets/icon/${e.iconName}.svg',
+                        colorFilter: const ColorFilter.mode(
+                          mainColor,
+                          BlendMode.srcIn,
+                        )),
+                    label: e.description,
+                  );
+                }
+                return BottomNavigationBarItem(
+                  icon: SvgPicture.asset('assets/icon/${e.iconName}.svg'),
+                  label: e.description,
+                );
+              }).toList(),
+              currentIndex: _selectedIndex,
+              selectedItemColor: mainColor,
+              onTap: (index) {
+                _selectedIndex = index;
+                setState(() {});
+              },
+              showUnselectedLabels: true,
+              unselectedItemColor: const Color(0xFF999999),
+              elevation: 0,
+              selectedFontSize: 14,
+              unselectedFontSize: 14,
+            ),
+          ),
+        );
       },
     );
   }
