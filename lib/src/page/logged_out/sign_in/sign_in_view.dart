@@ -6,6 +6,8 @@ import 'package:moa_diary_app/src/page/logged_in/home/home_page.dart';
 import 'package:moa_diary_app/src/page/logged_out/sign_in/bloc/sign_in_page_bloc.dart';
 
 class SignInView extends StatefulWidget {
+  const SignInView({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _SignInViewState();
@@ -35,7 +37,9 @@ class _SignInViewState extends State<SignInView> {
               padding: const EdgeInsets.all(30.0),
               child: Column(
                 children: [
-                  const SizedBox(height: 60,),
+                  const SizedBox(
+                    height: 150,
+                  ),
                   SvgPicture.asset(
                     'assets/icon/logo.svg',
                     width: 105,
@@ -173,7 +177,7 @@ class _SignInViewState extends State<SignInView> {
       Navigator.pushAndRemoveUntil(
         context,
         HomePage.route(),
-            (route) => false,
+        (route) => false,
       );
       return;
     }
