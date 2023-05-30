@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moa_diary_app/common/common.dart';
 import 'package:moa_diary_app/src/page/logged_in/home/bloc/home_page_bloc.dart';
+import 'package:moa_diary_app/src/page/logged_in/home/widget/widget.dart';
 import 'model/model.dart';
 
 class HomeView extends StatefulWidget {
@@ -37,16 +38,22 @@ class _HomeViewState extends State<HomeView> {
               items: _tabs.map<BottomNavigationBarItem>((e) {
                 if (_tabs[_selectedIndex] == e) {
                   return BottomNavigationBarItem(
-                    icon: SvgPicture.asset('assets/icon/${e.iconName}.svg',
-                        colorFilter: const ColorFilter.mode(
-                          mainColor,
-                          BlendMode.srcIn,
-                        )),
+                    icon: Padding(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      child: SvgPicture.asset('assets/icon/${e.iconName}.svg',
+                          colorFilter: const ColorFilter.mode(
+                            mainColor,
+                            BlendMode.srcIn,
+                          )),
+                    ),
                     label: e.description,
                   );
                 }
                 return BottomNavigationBarItem(
-                  icon: SvgPicture.asset('assets/icon/${e.iconName}.svg'),
+                  icon: Padding(
+                    padding: const EdgeInsets.only(bottom: 5.0),
+                    child: SvgPicture.asset('assets/icon/${e.iconName}.svg'),
+                  ),
                   label: e.description,
                 );
               }).toList(),
@@ -63,6 +70,7 @@ class _HomeViewState extends State<HomeView> {
               unselectedFontSize: 14,
             ),
           ),
+          body: SafeArea(child: HomeTabView()),
         );
       },
     );
