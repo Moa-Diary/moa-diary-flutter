@@ -11,7 +11,7 @@ class DefaultElevatedButton extends StatelessWidget {
     this.foregroundColor,
     this.disabledBackgroundColor,
     this.disabledForegroundColor,
-    this.borderRadius,
+    this.borderRadius = 6.0,
   });
 
   final VoidCallback onPressed;
@@ -22,25 +22,24 @@ class DefaultElevatedButton extends StatelessWidget {
   final Color? foregroundColor;
   final Color? disabledBackgroundColor;
   final Color? disabledForegroundColor;
-  final double? borderRadius;
+  final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: width ?? double.infinity,
-      height: height ?? 54,
+      height: height ?? 60,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor ?? mainColor,
           foregroundColor: foregroundColor ?? Colors.white,
-          shape: borderRadius != null
-              ? RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                )
-              : null,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
           disabledBackgroundColor: disabledForegroundColor,
           disabledForegroundColor: disabledForegroundColor,
+          elevation: 0.0,
         ),
         child: DefaultTextStyle(
           style: const TextStyle(
