@@ -16,6 +16,9 @@ class App extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: repositories,
       child: MaterialApp(
+        theme: ThemeData(
+          fontFamily: 'Pretendard',
+        ),
         debugShowCheckedModeBanner: false,
         showPerformanceOverlay: false,
         themeMode: ThemeMode.light,
