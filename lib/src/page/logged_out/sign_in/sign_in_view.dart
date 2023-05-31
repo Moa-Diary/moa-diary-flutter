@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moa_diary_app/common/common.dart';
 import 'package:moa_diary_app/src/page/logged_in/home/home_page.dart';
 import 'package:moa_diary_app/src/page/logged_out/sign_in/bloc/sign_in_page_bloc.dart';
+import 'package:moa_diary_app/src/page/logged_out/sign_up/sign_up_page.dart';
 
 class SignInView extends StatefulWidget {
   const SignInView({super.key});
@@ -124,7 +125,7 @@ class _SignInViewState extends State<SignInView> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: _moveToSignUpPage,
                         child: const Text(
                           '회원가입',
                           style: TextStyle(
@@ -188,5 +189,9 @@ class _SignInViewState extends State<SignInView> {
           email: _idTextController.text,
           password: _pwTextController.text,
         ));
+  }
+
+  void _moveToSignUpPage() {
+    Navigator.push(context, SignUpPage.route());
   }
 }
