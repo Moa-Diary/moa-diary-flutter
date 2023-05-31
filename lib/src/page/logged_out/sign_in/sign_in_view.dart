@@ -33,6 +33,8 @@ class _SignInViewState extends State<SignInView> {
         return Scaffold(
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            reverse: true,
             child: Padding(
               padding: const EdgeInsets.all(30.0),
               child: Column(
@@ -137,7 +139,9 @@ class _SignInViewState extends State<SignInView> {
                           shape: BoxShape.circle,
                         ),
                         child: Center(
-                          child: Image.asset('assets/image/img_google.png',),
+                          child: Image.asset(
+                            'assets/image/img_google.png',
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -152,11 +156,14 @@ class _SignInViewState extends State<SignInView> {
                           shape: BoxShape.circle,
                         ),
                         child: Center(
-                          child: Image.asset('assets/image/img_apple.png',),
+                          child: Image.asset(
+                            'assets/image/img_apple.png',
+                          ),
                         ),
                       ),
                     ],
-                  )
+                  ),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
