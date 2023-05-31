@@ -12,3 +12,5 @@ class RootPageInitial extends RootPageState {}
 class RootPageStateMoveToSignInPage extends RootPageState {}
 
 class RootPageStateAuthCheckSuccess extends RootPageState {}
+
+class RootPageStateStartSuccess extends RootPageState {}
