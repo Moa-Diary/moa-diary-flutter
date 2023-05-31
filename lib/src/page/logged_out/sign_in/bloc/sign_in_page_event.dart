@@ -18,3 +18,5 @@ class SignInEventSignInRequested extends SignInPageEvent {
   @override
   List<Object> get props => [email, password];
 }
+
+class SignInEventGoogleSignInRequested extends SignInPageEvent {}

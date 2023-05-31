@@ -130,17 +130,20 @@ class _SignInViewState extends State<SignInView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        width: 54,
-                        height: 54,
-                        padding: const EdgeInsets.all(15),
-                        decoration: const BoxDecoration(
-                          color: Color(0xFFF9F9F9),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Image.asset(
-                            'assets/image/img_google.png',
+                      InkWell(
+                        onTap: _onGoogleButtonPressed,
+                        child: Container(
+                          width: 54,
+                          height: 54,
+                          padding: const EdgeInsets.all(15),
+                          decoration: const BoxDecoration(
+                            color: Color(0xFFF9F9F9),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Image.asset(
+                              'assets/image/img_google.png',
+                            ),
                           ),
                         ),
                       ),
@@ -196,5 +199,9 @@ class _SignInViewState extends State<SignInView> {
           email: _idTextController.text,
           password: _pwTextController.text,
         ));
+  }
+
+  void _onGoogleButtonPressed() {
+    context.read<SignInPageBloc>().add(SignInEventGoogleSignInRequested());
   }
 }

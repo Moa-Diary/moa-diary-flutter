@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:moa_diary_app/moa_diary_domain/moa_diary_domain.dart';
 
 class AuthenticationDataRepository extends AuthenticationRepository {
@@ -26,5 +27,18 @@ class AuthenticationDataRepository extends AuthenticationRepository {
       email: email,
       password: password,
     );
+  }
+
+  @override
+  Future<void> loginWithGoogle() async {
+    final googleUser = await GoogleSignIn().signIn();
+
+    final googleAuth = await googleUser?.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

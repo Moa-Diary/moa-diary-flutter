@@ -15,6 +15,7 @@ class SignInPageBloc extends Bloc<SignInPageEvent, SignInPageState> {
         super(SignInPageInitial()) {
     on<SignInEventStarted>(_onStarted);
     on<SignInEventSignInRequested>(_onSignInRequested);
+    on<SignInEventGoogleSignInRequested>(_onGoogleSignInRequested);
   }
 
   final AuthenticationRepository _authenticationRepository;
@@ -54,7 +55,8 @@ class SignInPageBloc extends Bloc<SignInPageEvent, SignInPageState> {
       } else if (e.code == 'user-disable') {
         emit(const SignInStateShowSnackBar(message: '비활성화된 계정입니다!'));
       } else if (e.code == 'user-not-found') {
-        emit(const SignInStateShowSnackBar(message: '이메일과 일치하는 계정을 찾을 수 없습니다!'));
+        emit(
+            const SignInStateShowSnackBar(message: '이메일과 일치하는 계정을 찾을 수 없습니다!'));
       } else if (e.code == 'wrong-password') {
         emit(const SignInStateShowSnackBar(message: '비밀번호가 일치하지 않습니다!'));
       } else {
@@ -62,6 +64,18 @@ class SignInPageBloc extends Bloc<SignInPageEvent, SignInPageState> {
       }
     } catch (e) {
       emit(const SignInStateShowSnackBar(message: '오류가 발생했습니다!'));
+    }
+  }
+
+  Future<void> _onGoogleSignInRequested(
+    SignInEventGoogleSignInRequested event,
+    Emitter<SignInPageState> emit,
+  ) async {
+    try {
+      await _authenticationRepository.loginWithGoogle();
+      emit(SignInStateSignInSuccess());
+    } catch (e) {
+      emit(SignInStateShowSnackBar(message: '오류가 발생했습니다! ${e.toString()}'));
     }
   }
 }
