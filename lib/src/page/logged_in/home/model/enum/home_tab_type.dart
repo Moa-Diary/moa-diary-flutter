@@ -1,8 +1,8 @@
 enum HomeTabType {
-  home('홈', 'menu_home'),
-  diaryList('일기목록', 'menu_diary'),
-  emotion('감정통계', 'menu_emotion'),
-  myPage('마이페이지', 'menu_mypage');
+  home('홈', 'ic_menu_home'),
+  diaryList('일기목록', 'ic_menu_diary'),
+  emotion('감정통계', 'ic_menu_emotion'),
+  myPage('마이페이지', 'ic_menu_mypage');
 
   final String description;
   final String iconName;

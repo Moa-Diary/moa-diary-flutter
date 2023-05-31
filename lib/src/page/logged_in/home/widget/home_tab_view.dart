@@ -44,7 +44,7 @@ class HomeTabView extends StatelessWidget {
           Text(
             '하진님, 오늘도 함께 이야기해요!',
             style: TextStyle(
-              fontSize: 15,
+              fontSize: 16,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -53,7 +53,7 @@ class HomeTabView extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
-                child: Image.asset('assets/icon/home_character.png',),
+                child: Image.asset('assets/image/img_home_character.png',),
               ),
               DefaultElevatedButton(
                 onPressed: () {},

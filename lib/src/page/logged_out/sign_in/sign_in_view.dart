@@ -34,6 +34,8 @@ class _SignInViewState extends State<SignInView> {
         return Scaffold(
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            reverse: true,
             child: Padding(
               padding: const EdgeInsets.all(30.0),
               child: Column(
@@ -42,7 +44,7 @@ class _SignInViewState extends State<SignInView> {
                     height: 150,
                   ),
                   SvgPicture.asset(
-                    'assets/icon/logo.svg',
+                    'assets/icon/ic_logo.svg',
                     width: 105,
                   ),
                   const SizedBox(height: 16),
@@ -55,48 +57,35 @@ class _SignInViewState extends State<SignInView> {
                     ),
                   ),
                   const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    '모두의 일기를 도와주는 AI',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Color(0xFF777777),
+                    ),
+                  ),
+                  const SizedBox(
                     height: 137,
                   ),
-                  TextField(
+                  DefaultTextField(
                     controller: _idTextController,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: mainColor,
-                        ),
-                      ),
-                      hintText: '아이디 (이메일)',
-                    ),
+                    hintText: '아이디 (이메일)',
+                    keyboardType: TextInputType.emailAddress,
                   ),
                   const SizedBox(height: 40),
-                  TextField(
+                  DefaultTextField(
                     controller: _pwTextController,
+                    hintText: '비밀번호',
                     obscureText: true,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: mainColor,
-                        ),
-                      ),
-                      hintText: '비밀번호',
-                    ),
                   ),
                   const SizedBox(height: 34),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 54,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          _onSignInButtonPressed();
-                        },
-                        style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: mainColor,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6))),
-                        child: const Text(
-                          '로그인',
-                        )),
+                  DefaultElevatedButton(
+                    onPressed: _onSignInButtonPressed,
+                    child: const Text(
+                      '로그인하기',
+                    ),
                   ),
                   const SizedBox(
                     height: 13,
@@ -139,24 +128,43 @@ class _SignInViewState extends State<SignInView> {
                   const SizedBox(
                     height: 44,
                   ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 54,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: mainColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6))),
-                      child: const Text(
-                        '구글 로그인',
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 54,
+                        height: 54,
+                        padding: const EdgeInsets.all(15),
+                        decoration: const BoxDecoration(
+                          color: Color(0xFFF9F9F9),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Image.asset(
+                            'assets/image/img_google.png',
+                          ),
+                        ),
                       ),
-                    ),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      Container(
+                        width: 54,
+                        height: 54,
+                        padding: const EdgeInsets.all(15),
+                        decoration: const BoxDecoration(
+                          color: Color(0xFFF9F9F9),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Image.asset(
+                            'assets/image/img_apple.png',
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),

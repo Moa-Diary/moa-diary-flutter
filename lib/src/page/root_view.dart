@@ -23,7 +23,7 @@ class _RootViewState extends State<RootView> {
         return Scaffold(
           backgroundColor: Colors.white,
           body: Center(
-            child: SvgPicture.asset('assets/icon/logo.svg'),
+            child: SvgPicture.asset('assets/icon/ic_logo.svg'),
           ),
         );
       },
