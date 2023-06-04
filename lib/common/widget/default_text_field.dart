@@ -8,16 +8,22 @@ class DefaultTextField extends StatelessWidget {
     this.hintText,
     this.keyboardType,
     this.obscureText = false,
+    this.focusNode,
+    this.onChanged,
   });
 
   final TextEditingController? controller;
   final String? hintText;
   final TextInputType? keyboardType;
   final bool obscureText;
+  final FocusNode? focusNode;
+  final Function(String? text)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onChanged: onChanged,
+      focusNode: focusNode,
       obscureText: obscureText,
       controller: controller,
       decoration: InputDecoration(

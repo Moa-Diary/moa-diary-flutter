@@ -10,5 +10,7 @@ abstract class AuthenticationRepository {
     required String password,
   });
 
+  Future<void> logout();
+
   Future<void> loginWithGoogle();
 }

@@ -23,7 +23,9 @@ class RootPageBloc extends Bloc<RootPageEvent, RootPageState> {
     RootPageEventStarted event,
     Emitter<RootPageState> emit,
   ) async {
-    await FirebaseAuth.instance.signOut();
+    // TODO : 로그인/회원가입 기능 구현 후 삭제 요망
+    _authenticationRepository.logout();
+    emit(RootPageStateStartSuccess());
     add(RootPageEventAuthCheckRequested());
   }
 
