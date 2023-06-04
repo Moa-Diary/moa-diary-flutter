@@ -10,6 +10,7 @@ import 'package:moa_diary_app/common/common.dart';
 import 'package:moa_diary_app/moa_diary_data/moa_diary_data.dart';
 import 'package:moa_diary_app/moa_diary_domain/moa_diary_domain.dart';
 import 'package:moa_diary_app/src/app.dart';
+import 'package:moa_diary_app/util/network/dio_creator.dart';
 
 import 'firebase_options.dart';
 
@@ -45,10 +46,15 @@ void _onError(Object error, StackTrace stack) {
 }
 
 Future<List<RepositoryProvider>> _onInitialize() async {
+  final moaiDio = DioCreator.create(moaiEndpoint, []);
+
   final repositoryProvider = [
     RepositoryProvider<AuthenticationRepository>(
       create: (context) => AuthenticationDataRepository(
-        authProvider: FirebaseAuth.instance,
+        firebaseAuthProvider: FirebaseAuth.instance,
+        authenticationProvider: AuthenticationNetworkProvider(
+          httpClient: moaiDio,
+        ),
       ),
     )
   ];

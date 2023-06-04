@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:moa_diary_app/moa_diary_domain/moa_diary_domain.dart';
@@ -31,11 +32,59 @@ class SignUpPageBloc extends Bloc<SignUpPageEvent, SignUpPageState> {
     Emitter<SignUpPageState> emit,
   ) async {
     emit(SignUpStateInProgress());
-    emit(const SignUpStateDuplicateCheckSuccess(useEmailAvailable: true));
+
+    try {
+      final isEmailAvailable =
+          await _authenticationRepository.checkEmailDuplicate(
+        event.email,
+      );
+      emit(SignUpStateDuplicateCheckSuccess(useEmailAvailable: isEmailAvailable));
+    } catch (e) {
+      emit(const SignUpStateShowSnackBar(message: '오류가 발생했습니다!'));
+    }
   }
 
   Future<void> _onCompleteButtonPressed(
     SignUpEventCompleteButtonPressed event,
     Emitter<SignUpPageState> emit,
-  ) async {}
+  ) async {
+    emit(SignUpStateInProgress());
+    try {
+      if (!event.isDuplicateChecked) {
+        emit(const SignUpStateShowSnackBar(message: '이메일 중복확인을 진행해주세요!'));
+        return;
+      }
+
+      if (event.password != event.passwordConfirm) {
+        emit(const SignUpStateShowSnackBar(message: '비밀번호가 일치하지 않습니다!'));
+        return;
+      }
+
+      final uid = await _authenticationRepository.signUp(
+        name: event.name,
+        email: event.email,
+        password: event.password,
+      );
+
+      final dto = UserRegisterDto(
+        userName: event.name,
+        userEmail: event.email,
+        userPhone: '',
+        firebaseUniqueKey: uid,
+      );
+
+      await _authenticationRepository.registerUser(dto);
+      emit(SignUpStateSuccess());
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        emit(const SignUpStateShowSnackBar(message: '비밀번호가 너무 약합니다!'));
+      } else if (e.code == 'email-already-in-use') {
+        emit(const SignUpStateShowSnackBar(message: '이미 사용중인 이메일입니다!'));
+      } else {
+        emit(const SignUpStateShowSnackBar(message: '회원가입 도중 오류가 발생했습니다!'));
+      }
+    } catch (e) {
+      emit(const SignUpStateShowSnackBar(message: '오류가 발생했습니다!'));
+    }
+  }
 }
