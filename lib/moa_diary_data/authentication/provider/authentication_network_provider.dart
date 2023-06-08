@@ -12,7 +12,7 @@ class AuthenticationNetworkProvider extends AuthenticationProvider {
   @override
   Future<void> registerUser(UserRegisterDto dto) async {
     await _httpClient.post(
-      '/users',
+      '/user/create',
       data: dto,
     );
   }
@@ -20,6 +20,6 @@ class AuthenticationNetworkProvider extends AuthenticationProvider {
   @override
   Future<bool> checkEmailDuplicate(String email) async {
     final response = await _httpClient.get('/user/check/email/$email');
-    return bool.parse(response.data);
+    return response.data;
   }
 }

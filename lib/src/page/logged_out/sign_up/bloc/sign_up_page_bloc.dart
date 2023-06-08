@@ -40,7 +40,7 @@ class SignUpPageBloc extends Bloc<SignUpPageEvent, SignUpPageState> {
       );
       emit(SignUpStateDuplicateCheckSuccess(useEmailAvailable: isEmailAvailable));
     } catch (e) {
-      emit(const SignUpStateShowSnackBar(message: '오류가 발생했습니다!'));
+      emit(SignUpStateShowSnackBar(message: e.toString()));
     }
   }
 
@@ -50,8 +50,23 @@ class SignUpPageBloc extends Bloc<SignUpPageEvent, SignUpPageState> {
   ) async {
     emit(SignUpStateInProgress());
     try {
+      if (event.name.isEmpty) {
+        emit(const SignUpStateShowSnackBar(message: '이름을 입력해주세요!'));
+        return;
+      }
+
       if (!event.isDuplicateChecked) {
         emit(const SignUpStateShowSnackBar(message: '이메일 중복확인을 진행해주세요!'));
+        return;
+      }
+
+      if (!event.isEmailAvailable) {
+        emit(const SignUpStateShowSnackBar(message: '사용 불가능한 이메일입니다!'));
+        return;
+      }
+
+      if (event.password.isEmpty) {
+        emit(const SignUpStateShowSnackBar(message: '비밀번호를 입력해주세요!'));
         return;
       }
 
@@ -84,7 +99,7 @@ class SignUpPageBloc extends Bloc<SignUpPageEvent, SignUpPageState> {
         emit(const SignUpStateShowSnackBar(message: '회원가입 도중 오류가 발생했습니다!'));
       }
     } catch (e) {
-      emit(const SignUpStateShowSnackBar(message: '오류가 발생했습니다!'));
+      emit(SignUpStateShowSnackBar(message: e.toString()));
     }
   }
 }

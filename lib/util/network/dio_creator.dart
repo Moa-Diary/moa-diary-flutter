@@ -19,7 +19,7 @@ class DioCreator {
     ..options.sendTimeout = _defaultSendTimeout
     ..options.receiveTimeout = _defaultReceiveTimeout
     ..options.responseType = ResponseType.json
-    ..options.contentType = 'json';
+    ..options.contentType = 'application/json';
 
     client.interceptors.addAll(interceptors ?? []);
 

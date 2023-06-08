@@ -52,38 +52,6 @@ class HomeTabView extends StatelessWidget {
                   ),
                 ),
               ],
-          const Text(
-            '오늘까지 쌓인',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          Stack(
-            alignment: Alignment.bottomLeft,
-            children: [
-              Text(
-                '내 일기 88개',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Container(
-                width: 187,
-                height: 9,
-                color: const Color(0x33FFB812),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            '하진님, 오늘도 함께 이야기해요!',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
             ),
           ),
           Column(

@@ -148,6 +148,7 @@ class _SignUpViewState extends State<SignUpView> {
     }
     if (state is SignUpStateSuccess) {
       SuccessSnackBar.show(context, '회원가입이 완료되었습니다.');
+      Navigator.pop(context);
       return;
     }
   }
@@ -159,6 +160,7 @@ class _SignUpViewState extends State<SignUpView> {
           password: _pwTextController.text,
           passwordConfirm: _pwConfirmTextController.text,
           isDuplicateChecked: _isDuplicateChecked,
+          isEmailAvailable: _useEmailAvailable,
         ));
   }
 

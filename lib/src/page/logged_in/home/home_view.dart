@@ -26,33 +26,36 @@ class _HomeViewState extends State<HomeView> {
           bottomNavigationBar: Container(
             padding: const EdgeInsets.only(top: 3),
             decoration: const BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  color: Color(0xFFDDDDDD),
-                  width: 1,
-                ),
-              )
-            ),
+                border: Border(
+              top: BorderSide(
+                color: Color(0xFFDDDDDD),
+                width: 1,
+              ),
+            )),
             child: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               items: _tabs.map<BottomNavigationBarItem>((e) {
                 if (_tabs[_selectedIndex] == e) {
                   return BottomNavigationBarItem(
                     icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      child: SvgPicture.asset('assets/icon/${e.iconName}.svg',
+                        padding: const EdgeInsets.only(bottom: 5.0),
+                        child: SvgPicture.asset(
+                          'assets/icon/${e.iconName}.svg',
                           colorFilter: const ColorFilter.mode(
                             mainColor,
                             BlendMode.srcIn,
-                          )),
-                    ),
+                          ),
+                        )),
                     label: e.description,
+                    backgroundColor: mainColor,
                   );
                 }
                 return BottomNavigationBarItem(
                   icon: Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
-                    child: SvgPicture.asset('assets/icon/${e.iconName}.svg'),
+                    child: SvgPicture.asset(
+                      'assets/icon/${e.iconName}.svg',
+                    ),
                   ),
                   label: e.description,
                 );
