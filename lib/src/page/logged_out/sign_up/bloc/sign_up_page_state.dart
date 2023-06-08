@@ -21,3 +21,16 @@ class SignUpStateDuplicateCheckSuccess extends SignUpPageState {
 }
 
 class SignUpStateInProgress extends SignUpPageState {}
+
+class SignUpStateSuccess extends SignUpPageState {}
+
+class SignUpStateShowSnackBar extends SignUpPageState {
+  const SignUpStateShowSnackBar({
+    required this.message,
+  });
+
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}

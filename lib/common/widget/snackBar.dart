@@ -13,3 +13,17 @@ class ErrorSnackBar {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
+
+class SuccessSnackBar {
+  static void show(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      backgroundColor: Colors.green,
+      content: Text(message),
+      elevation: 10,
+      margin: const EdgeInsets.all(10),
+      behavior: SnackBarBehavior.floating,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+}

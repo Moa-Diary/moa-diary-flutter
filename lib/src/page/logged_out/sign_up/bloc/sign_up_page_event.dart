@@ -27,6 +27,7 @@ class SignUpEventCompleteButtonPressed extends SignUpPageEvent {
     required this.password,
     required this.passwordConfirm,
     required this.isDuplicateChecked,
+    required this.isEmailAvailable,
   });
 
   final String name;
@@ -34,6 +35,7 @@ class SignUpEventCompleteButtonPressed extends SignUpPageEvent {
   final String password;
   final String passwordConfirm;
   final bool isDuplicateChecked;
+  final bool isEmailAvailable;
 
   @override
   List<Object> get props => [
@@ -42,5 +44,6 @@ class SignUpEventCompleteButtonPressed extends SignUpPageEvent {
         password,
         passwordConfirm,
         isDuplicateChecked,
+        isEmailAvailable,
       ];
 }
