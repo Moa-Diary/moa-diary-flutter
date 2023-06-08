@@ -59,7 +59,15 @@ class AuthenticationDataRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<bool> checkEmailDuplicate(String email) async{
+  Future<bool> checkEmailDuplicate(String email) async {
     return await _authenticationProvider.checkEmailDuplicate(email);
+  }
+
+  @override
+  Future<bool> useGoogleLogin(String email) async {
+    final results =
+        await _firebaseAuthProvider.fetchSignInMethodsForEmail(email);
+    
+    return results.contains(GoogleAuthProvider.GOOGLE_SIGN_IN_METHOD);
   }
 }

@@ -42,6 +42,12 @@ class SignInPageBloc extends Bloc<SignInPageEvent, SignInPageState> {
         return;
       }
 
+      if (await _authenticationRepository.useGoogleLogin(email)) {
+        emit(const SignInStateShowSnackBar(
+            message: '구글 계정이 존재합니다. 구글 로그인을 이용하세요.'));
+        return;
+      }
+
       await _authenticationRepository.login(
         email: event.email.trim(),
         password: event.password.trim(),
@@ -54,7 +60,8 @@ class SignInPageBloc extends Bloc<SignInPageEvent, SignInPageState> {
       } else if (e.code == 'user-disable') {
         emit(const SignInStateShowSnackBar(message: '비활성화된 계정입니다!'));
       } else if (e.code == 'user-not-found') {
-        emit(const SignInStateShowSnackBar(message: '이메일과 일치하는 계정을 찾을 수 없습니다!'));
+        emit(
+            const SignInStateShowSnackBar(message: '이메일과 일치하는 계정을 찾을 수 없습니다!'));
       } else if (e.code == 'wrong-password') {
         emit(const SignInStateShowSnackBar(message: '비밀번호가 일치하지 않습니다!'));
       } else {

@@ -10,10 +10,8 @@ class HomeTabView extends StatelessWidget {
       padding: const EdgeInsets.all(32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          const SizedBox(
-            height: 50,
-          ),
           const Text(
             '오늘까지 쌓인',
             style: TextStyle(
@@ -48,23 +46,26 @@ class HomeTabView extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
-                child: Image.asset('assets/image/img_home_character.png',),
-              ),
-              DefaultElevatedButton(
-                onPressed: () {},
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('일기 쓰러가기'),
-                  ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Image.asset('assets/image/img_home_character.png',),
                 ),
-              ),
-            ],
+                DefaultElevatedButton(
+                  onPressed: () {},
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('일기 쓰러가기'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

@@ -22,4 +22,6 @@ abstract class AuthenticationRepository {
   Future<void> registerUser(UserRegisterDto dto);
 
   Future<bool> checkEmailDuplicate(String email);
+
+  Future<bool> useGoogleLogin(String email);
 }
