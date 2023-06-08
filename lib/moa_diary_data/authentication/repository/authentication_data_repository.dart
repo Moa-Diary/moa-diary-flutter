@@ -70,4 +70,17 @@ class AuthenticationDataRepository extends AuthenticationRepository {
     
     return results.contains(GoogleAuthProvider.GOOGLE_SIGN_IN_METHOD);
   }
+
+  @override
+  Future<void> loginWithGoogle() async {
+    final googleUser = await GoogleSignIn().signIn();
+
+    final googleAuth = await googleUser?.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    await FirebaseAuth.instance.signInWithCredential(credential);
+  }
 }

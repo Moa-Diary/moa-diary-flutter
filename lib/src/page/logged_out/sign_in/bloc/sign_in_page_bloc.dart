@@ -15,6 +15,7 @@ class SignInPageBloc extends Bloc<SignInPageEvent, SignInPageState> {
         super(SignInPageInitial()) {
     on<SignInEventStarted>(_onStarted);
     on<SignInEventSignInRequested>(_onSignInRequested);
+    on<SignInEventGoogleSignInRequested>(_onGoogleSignInRequested);
   }
 
   final AuthenticationRepository _authenticationRepository;
@@ -69,6 +70,18 @@ class SignInPageBloc extends Bloc<SignInPageEvent, SignInPageState> {
       }
     } catch (e) {
       emit(const SignInStateShowSnackBar(message: '오류가 발생했습니다!'));
+    }
+  }
+
+  Future<void> _onGoogleSignInRequested(
+    SignInEventGoogleSignInRequested event,
+    Emitter<SignInPageState> emit,
+  ) async {
+    try {
+      await _authenticationRepository.loginWithGoogle();
+      emit(SignInStateSignInSuccess());
+    } catch (e) {
+      emit(SignInStateShowSnackBar(message: '오류가 발생했습니다! ${e.toString()}'));
     }
   }
 }
