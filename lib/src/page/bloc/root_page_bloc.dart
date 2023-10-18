@@ -10,8 +10,9 @@ part 'root_page_event.dart';
 part 'root_page_state.dart';
 
 class RootPageBloc extends Bloc<RootPageEvent, RootPageState> {
-  RootPageBloc({required AuthenticationRepository authenticationRepository})
-      : _authenticationRepository = authenticationRepository,
+  RootPageBloc({
+    required AuthenticationRepository authenticationRepository,
+  })  : _authenticationRepository = authenticationRepository,
         super(RootPageInitial()) {
     on<RootPageEventStarted>(_onStarted);
     on<RootPageEventAuthCheckRequested>(_onAuthCheckRequested);
@@ -24,7 +25,7 @@ class RootPageBloc extends Bloc<RootPageEvent, RootPageState> {
     Emitter<RootPageState> emit,
   ) async {
     // TODO : 로그인/회원가입 기능 구현 후 삭제 요망
-    _authenticationRepository.logout();
+    await _authenticationRepository.logout();
     emit(RootPageStateStartSuccess());
     add(RootPageEventAuthCheckRequested());
   }

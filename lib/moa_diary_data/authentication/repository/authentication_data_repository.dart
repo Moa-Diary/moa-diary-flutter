@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:moa_diary_app/moa_diary_domain/moa_diary_domain.dart';
 
 class AuthenticationDataRepository extends AuthenticationRepository {
@@ -47,5 +48,13 @@ class AuthenticationDataRepository extends AuthenticationRepository {
     );
 
     await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  @override
+  Future<bool> useGoogleLogin(String email) async {
+    List<String> providerList =
+        await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+
+    return providerList.contains(GoogleAuthProvider.GOOGLE_SIGN_IN_METHOD);
   }
 }

@@ -12,7 +12,20 @@
           "package_name": "com.project.moa_diary_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "644739712023-ggkkuu2gt2b1o4569lh535g9j0ie51rv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.moa_diary_app",
+            "certificate_hash": "2aed20dc71cc5b2f6852cf95489822031f91fabb"
+          }
+        },
+        {
+          "client_id": "644739712023-u7gbiirblosj8gkj0hkc9s4erkcds734.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyArYxtAP-m5eVlFgtYnZlLwOOpYHS2uMX0"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644739712023-u7gbiirblosj8gkj0hkc9s4erkcds734.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "644739712023-2r8kpjd6ml79qkq9dglfkcdm81447lhg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.project.moaDiaryApp"
+              }
+            }
+          ]
         }
       }
     }

@@ -11,11 +11,22 @@ class SignInPageInitial extends SignInPageState {}
 
 class SignInStateSignInSuccess extends SignInPageState {}
 
-class SignInStateShowSnackBar extends SignInPageState {
-  const SignInStateShowSnackBar({required this.message});
+class SignInStateShowErrorSnackBar extends SignInPageState {
+  const SignInStateShowErrorSnackBar({required this.message});
 
   final String message;
 
   @override
   List<Object> get props => [message];
 }
+
+class SignInStateShowSuccessSnackBar extends SignInPageState {
+  const SignInStateShowSuccessSnackBar({required this.message});
+
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}
+
+class SignInStateInProgress extends SignInPageState {}

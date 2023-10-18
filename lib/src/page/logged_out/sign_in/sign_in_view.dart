@@ -34,106 +34,122 @@ class _SignInViewState extends State<SignInView> {
         return Scaffold(
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            reverse: true,
             child: Padding(
               padding: const EdgeInsets.all(30.0),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 150,
-                  ),
-                  SvgPicture.asset(
-                    'assets/icon/ic_logo.svg',
-                    width: 105,
-                  ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'MOAI',
-                    style: TextStyle(
-                      color: mainColor,
-                      fontSize: 28,
-                      fontWeight: FontWeight.w700,
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: 80),
+                    SvgPicture.asset(
+                      'assets/icon/ic_logo.svg',
+                      width: 105,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    '모두의 일기를 도와주는 AI',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF777777),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'MOAI',
+                      style: TextStyle(
+                        color: mainColor,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 137,
-                  ),
-                  DefaultTextField(
-                    controller: _idTextController,
-                    hintText: '아이디 (이메일)',
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(height: 40),
-                  DefaultTextField(
-                    controller: _pwTextController,
-                    hintText: '비밀번호',
-                    obscureText: true,
-                  ),
-                  const SizedBox(height: 34),
-                  DefaultElevatedButton(
-                    onPressed: _onSignInButtonPressed,
-                    child: const Text(
-                      '로그인하기',
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 13,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {},
-                        child: const Text(
-                          '아이디 찾기  |  ',
-                          style: TextStyle(
-                            color: Color(0xFFA4A4A4),
-                            fontSize: 13,
+                    const Text(
+                      '모두의 일기를 도와주는 AI',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF777777),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    DefaultTextField(
+                      controller: _idTextController,
+                      hintText: '아이디 (이메일)',
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    const SizedBox(height: 40),
+                    DefaultTextField(
+                      controller: _pwTextController,
+                      hintText: '비밀번호',
+                      obscureText: true,
+                    ),
+                    const SizedBox(height: 34),
+                    DefaultElevatedButton(
+                      onPressed: _onSignInButtonPressed,
+                      child: const Text(
+                        '로그인하기',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 13,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {},
+                          child: const Text(
+                            '아이디 찾기  |  ',
+                            style: TextStyle(
+                              color: Color(0xFFA4A4A4),
+                              fontSize: 13,
+                            ),
                           ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {},
-                        child: const Text(
-                          '비밀번호 찾기  |  ',
-                          style: TextStyle(
-                            color: Color(0xFFA4A4A4),
-                            fontSize: 13,
+                        GestureDetector(
+                          onTap: () {},
+                          child: const Text(
+                            '비밀번호 찾기  |  ',
+                            style: TextStyle(
+                              color: Color(0xFFA4A4A4),
+                              fontSize: 13,
+                            ),
                           ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: _moveToSignUpPage,
-                        child: const Text(
-                          '회원가입',
-                          style: TextStyle(
-                            color: Color(0xFFA4A4A4),
-                            fontSize: 13,
+                        GestureDetector(
+                          onTap: _moveToSignUpPage,
+                          child: const Text(
+                            '회원가입',
+                            style: TextStyle(
+                              color: Color(0xFFA4A4A4),
+                              fontSize: 13,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 44,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: _onGoogleButtonPressed,
-                        child: Container(
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 44,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: _onGoogleButtonPressed,
+                          child: Container(
+                            width: 54,
+                            height: 54,
+                            padding: const EdgeInsets.all(15),
+                            decoration: const BoxDecoration(
+                              color: Color(0xFFF9F9F9),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Image.asset(
+                                'assets/image/img_google.png',
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        Container(
                           width: 54,
                           height: 54,
                           padding: const EdgeInsets.all(15),
@@ -143,32 +159,14 @@ class _SignInViewState extends State<SignInView> {
                           ),
                           child: Center(
                             child: Image.asset(
-                              'assets/image/img_google.png',
+                              'assets/image/img_apple.png',
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      Container(
-                        width: 54,
-                        height: 54,
-                        padding: const EdgeInsets.all(15),
-                        decoration: const BoxDecoration(
-                          color: Color(0xFFF9F9F9),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Image.asset(
-                            'assets/image/img_apple.png',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -181,9 +179,12 @@ class _SignInViewState extends State<SignInView> {
     BuildContext context,
     SignInPageState state,
   ) {
-    if (state is SignInStateShowSnackBar) {
+    if (state is SignInStateShowErrorSnackBar) {
       ErrorSnackBar.show(context, state.message);
       return;
+    }
+    if (state is SignInStateShowSuccessSnackBar) {
+      SuccessSnackBar.show(context, state.message);
     }
     if (state is SignInStateSignInSuccess) {
       Navigator.pushAndRemoveUntil(

@@ -58,5 +58,16 @@
     		</array>
     	</dict>
     </array>
+    <key>GIDClientID</key>
+    <string>644739712023-2r8kpjd6ml79qkq9dglfkcdm81447lhg.apps.googleusercontent.com</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>com.googleusercontent.apps.644739712023-2r8kpjd6ml79qkq9dglfkcdm81447lhg</string>
+        </array>
+      </dict>
+    </array>
 </dict>
 </plist>

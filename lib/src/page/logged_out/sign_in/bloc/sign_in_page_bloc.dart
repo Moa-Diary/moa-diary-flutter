@@ -30,16 +30,24 @@ class SignInPageBloc extends Bloc<SignInPageEvent, SignInPageState> {
     Emitter<SignInPageState> emit,
   ) async {
     try {
+      emit(SignInStateInProgress());
+
       final email = event.email;
       final password = event.password;
 
       if (email.isEmpty) {
-        emit(const SignInStateShowSnackBar(message: '아이디를 입력해주세요!'));
+        emit(const SignInStateShowErrorSnackBar(message: '아이디를 입력해주세요!'));
         return;
       }
 
       if (password.isEmpty) {
-        emit(const SignInStateShowSnackBar(message: '비밀번호를 입력해주세요!'));
+        emit(const SignInStateShowErrorSnackBar(message: '비밀번호를 입력해주세요!'));
+        return;
+      }
+
+      if (await _authenticationRepository.useGoogleLogin(email)) {
+        emit(const SignInStateShowErrorSnackBar(
+            message: '구글 계정이 존재합니다. 구글 로그인을 이용하세요.'));
         return;
       }
 
@@ -48,22 +56,25 @@ class SignInPageBloc extends Bloc<SignInPageEvent, SignInPageState> {
         password: event.password.trim(),
       );
 
+      emit(const SignInStateShowSuccessSnackBar(
+        message: '로그인되었습니다.',
+      ));
       emit(SignInStateSignInSuccess());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-email') {
-        emit(const SignInStateShowSnackBar(message: '유효한 이메일이 아닙니다!'));
+        emit(const SignInStateShowErrorSnackBar(message: '유효한 이메일이 아닙니다!'));
       } else if (e.code == 'user-disable') {
-        emit(const SignInStateShowSnackBar(message: '비활성화된 계정입니다!'));
+        emit(const SignInStateShowErrorSnackBar(message: '비활성화된 계정입니다!'));
       } else if (e.code == 'user-not-found') {
         emit(
-            const SignInStateShowSnackBar(message: '이메일과 일치하는 계정을 찾을 수 없습니다!'));
+            const SignInStateShowErrorSnackBar(message: '이메일과 일치하는 계정을 찾을 수 없습니다!'));
       } else if (e.code == 'wrong-password') {
-        emit(const SignInStateShowSnackBar(message: '비밀번호가 일치하지 않습니다!'));
+        emit(const SignInStateShowErrorSnackBar(message: '비밀번호가 일치하지 않습니다!'));
       } else {
-        emit(SignInStateShowSnackBar(message: '로그인 중 오류가 발생했습니다! ${e.code}'));
+        emit(SignInStateShowErrorSnackBar(message: '로그인 중 오류가 발생했습니다! ${e.code}'));
       }
     } catch (e) {
-      emit(const SignInStateShowSnackBar(message: '오류가 발생했습니다!'));
+      emit(const SignInStateShowErrorSnackBar(message: '오류가 발생했습니다!'));
     }
   }
 
@@ -72,10 +83,13 @@ class SignInPageBloc extends Bloc<SignInPageEvent, SignInPageState> {
     Emitter<SignInPageState> emit,
   ) async {
     try {
+      emit(SignInStateInProgress());
+
       await _authenticationRepository.loginWithGoogle();
+
       emit(SignInStateSignInSuccess());
     } catch (e) {
-      emit(SignInStateShowSnackBar(message: '오류가 발생했습니다! ${e.toString()}'));
+      emit(SignInStateShowErrorSnackBar(message: '오류가 발생했습니다! ${e.toString()}'));
     }
   }
 }
