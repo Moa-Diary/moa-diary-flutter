@@ -10,6 +10,8 @@ import 'package:moa_diary_app/common/common.dart';
 import 'package:moa_diary_app/moa_diary_data/moa_diary_data.dart';
 import 'package:moa_diary_app/moa_diary_domain/moa_diary_domain.dart';
 import 'package:moa_diary_app/src/app.dart';
+import 'package:moa_diary_app/util/network/dio_creator.dart';
+import 'package:moa_diary_app/util/network/network.dart';
 
 import 'firebase_options.dart';
 
@@ -27,13 +29,16 @@ Future<void> _runApp() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(Phoenix(
+  runApp(
+    Phoenix(
       child: InitializeView(
-    builder: (repositories) => App(
-      repositories: repositories,
+        builder: (repositories) => App(
+          repositories: repositories,
+        ),
+        onInitialize: _onInitialize,
+      ),
     ),
-    onInitialize: _onInitialize,
-  )));
+  );
 }
 
 void _onError(Object error, StackTrace stack) {
@@ -45,12 +50,23 @@ void _onError(Object error, StackTrace stack) {
 }
 
 Future<List<RepositoryProvider>> _onInitialize() async {
+  final dio = DioCreator.create(endpoint, []);
+
+  final authenticationRepository = AuthenticationDataRepository(
+    authProvider: FirebaseAuth.instance,
+  );
+
   final repositoryProvider = [
-    RepositoryProvider<AuthenticationRepository>(
-      create: (context) => AuthenticationDataRepository(
-        authProvider: FirebaseAuth.instance,
+    RepositoryProvider<AuthenticationRepository>.value(
+        value: authenticationRepository),
+    RepositoryProvider(
+      create: (context) => DiaryDataRepository(
+        authenticationRepository: authenticationRepository,
+        diaryProvider: DiaryNetworkProvider(
+          httpClient: dio,
+        ),
       ),
-    )
+    ),
   ];
 
   Logger.log('=========== Moa Started! ===========');

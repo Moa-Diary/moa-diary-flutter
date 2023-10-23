@@ -18,6 +18,7 @@ class App extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(
           fontFamily: 'Pretendard',
+          brightness: Brightness.light,
         ),
         debugShowCheckedModeBanner: false,
         showPerformanceOverlay: false,

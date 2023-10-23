@@ -47,7 +47,7 @@ class _SignUpViewState extends State<SignUpView> {
           },
           child: Scaffold(
             backgroundColor: Colors.white,
-            appBar: const DefaultAppBar(
+            appBar: DefaultAppBar(
               title: Text('회원가입'),
             ),
             body: Padding(

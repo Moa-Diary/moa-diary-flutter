@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moa_diary_app/common/common.dart';
+import 'package:moa_diary_app/src/page/logged_in/dashboard/dashboard_page.dart';
+import 'package:moa_diary_app/src/page/logged_in/dashboard/dashboard_view.dart';
+import 'package:moa_diary_app/src/page/logged_in/diary/list/diary_list_page.dart';
 import 'package:moa_diary_app/src/page/logged_in/home/bloc/home_page_bloc.dart';
-import 'package:moa_diary_app/src/page/logged_in/home/widget/widget.dart';
 import 'model/model.dart';
 
 class HomeView extends StatefulWidget {
@@ -15,6 +17,12 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final _tabs = HomeTabType.values;
+  final _pageListByTab = [
+    DashBoardPage(),
+    DiaryListPage(),
+    Text(''),
+    Text(''),
+  ];
   int _selectedIndex = 0;
 
   @override
@@ -31,7 +39,7 @@ class _HomeViewState extends State<HomeView> {
                   color: Color(0xFFDDDDDD),
                   width: 1,
                 ),
-              )
+              ),
             ),
             child: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
@@ -70,7 +78,7 @@ class _HomeViewState extends State<HomeView> {
               unselectedFontSize: 14,
             ),
           ),
-          body: SafeArea(child: HomeTabView()),
+          body: _pageListByTab[_selectedIndex],
         );
       },
     );
