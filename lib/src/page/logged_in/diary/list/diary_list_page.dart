@@ -22,7 +22,7 @@ class DiaryListPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => DiaryListBloc(
         diaryRepository: context.read<DiaryRepository>(),
-      ),
+      )..add(DiaryListEventEntered()),
       child: const DiaryListView(),
     );
   }

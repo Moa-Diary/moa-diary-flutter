@@ -4,5 +4,6 @@ abstract class DiaryRepository {
   Future<PaginationResponseDto<DiaryDto>> fetchDiaryList({
     required int page,
     required int size,
+    required bool isMine,
   });
 }

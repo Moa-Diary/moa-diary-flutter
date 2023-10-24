@@ -45,7 +45,7 @@ class _MyJsonConverter<T> extends JsonConverter<T, Map<String, dynamic>> {
 
   @override
   T fromJson(json) {
-    if (T is DiaryDto) {
+    if (T == DiaryDto) {
       return DiaryDto.fromJson(json) as T;
     }
     throw UnsupportedError('Unsupported type: $T');

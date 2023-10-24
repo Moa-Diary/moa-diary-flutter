@@ -10,7 +10,7 @@ class DiaryNetworkProvider extends DiaryProvider {
 
   @override
   Future<PaginationResponseDto<DiaryDto>> fetchDiaryList({
-    required String userId,
+    required int userId,
     required int page,
     required int size,
   }) async {
@@ -22,6 +22,6 @@ class DiaryNetworkProvider extends DiaryProvider {
       },
     );
 
-    return PaginationResponseDto.fromJson(result.data ?? {});
+    return PaginationResponseDto<DiaryDto>.fromJson(result.data ?? {});
   }
 }

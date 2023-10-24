@@ -14,8 +14,10 @@ class DiaryDataRepository extends DiaryRepository {
   Future<PaginationResponseDto<DiaryDto>> fetchDiaryList({
     required int page,
     required int size,
+    required bool isMine,
   }) async {
-    final userId = _authenticationRepository.currentUser?.email ?? '';
+    final userId =
+        isMine ? _authenticationRepository.currentUser?.userId ?? 0 : 0;
 
     return _diaryProvider.fetchDiaryList(
       userId: userId,

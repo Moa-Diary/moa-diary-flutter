@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:moa_diary_app/moa_diary_domain/moa_diary_domain.dart';
 
 abstract class AuthenticationRepository {
   const AuthenticationRepository();
 
-  User? get currentUser;
+  UserDto? get currentUser;
 
   Future<void> login({
     required String email,
@@ -14,5 +14,13 @@ abstract class AuthenticationRepository {
 
   Future<void> loginWithGoogle();
 
-  Future<bool> useGoogleLogin(String email);
+  Future<bool> isUseGoogleLogin(String email);
+
+  Future<void> signUp({
+    required String name,
+    required String email,
+    required String password,
+  });
+
+  Future<bool> checkEmailDuplication(String email);
 }

@@ -53,13 +53,16 @@ Future<List<RepositoryProvider>> _onInitialize() async {
   final dio = DioCreator.create(endpoint, []);
 
   final authenticationRepository = AuthenticationDataRepository(
-    authProvider: FirebaseAuth.instance,
+    firebaseAuthProvider: FirebaseAuth.instance,
+    authenticationProvider: AuthenticationNetworkProvider(
+      httpClient: dio,
+    ),
   );
 
   final repositoryProvider = [
     RepositoryProvider<AuthenticationRepository>.value(
         value: authenticationRepository),
-    RepositoryProvider(
+    RepositoryProvider<DiaryRepository>(
       create: (context) => DiaryDataRepository(
         authenticationRepository: authenticationRepository,
         diaryProvider: DiaryNetworkProvider(

@@ -5,6 +5,7 @@ import 'package:moa_diary_app/moa_diary_domain/diary/model/dto/diary_dto.dart';
 import 'package:moa_diary_app/src/page/logged_in/diary/list/bloc/diary_list_bloc.dart';
 
 import 'widget/widget.dart';
+import 'enum/enum.dart';
 
 class DiaryListView extends StatefulWidget {
   const DiaryListView({Key? key}) : super(key: key);
@@ -18,13 +19,16 @@ class _DiaryListViewState extends State<DiaryListView> {
   List<DiaryDto> _diaryList = [];
   bool _hasMoreResult = true;
 
+  final _diaryListTabs = DiaryListType.values;
+  final _selectedDiaryListTab = DiaryListType.myDiary;
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<DiaryListBloc, DiaryListState>(
       listener: _blocListener,
       builder: (context, state) {
         return DefaultTabController(
-          length: 2,
+          length: _diaryListTabs.length,
           child: Scaffold(
             appBar: DefaultAppBar(
               title: Text('일기목록'),
@@ -36,26 +40,27 @@ class _DiaryListViewState extends State<DiaryListView> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: TabBar(
-                      tabs: const [
-                        Tab(
-                          child: Text(
-                            '내 일기',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16),
-                          ),
-                        ),
-                        Tab(
-                          child: Text(
-                            '일기 피드',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16),
-                          ),
-                        ),
-                      ],
+                      onTap: (index) {
+                        context
+                            .read<DiaryListBloc>()
+                            .add(DiaryListEventTabChanged(
+                              type: _diaryListTabs[index],
+                            ));
+                      },
+                      tabs: _diaryListTabs
+                          .map(
+                            (e) => Tab(
+                              child: Text(
+                                e.description,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
                       indicatorWeight: 1,
                       indicatorColor: Colors.black,
                       isScrollable: true,
@@ -70,13 +75,14 @@ class _DiaryListViewState extends State<DiaryListView> {
 
                 return DiaryListTile(
                   imageUrls: diary.imageUrls,
-                  userName: '익명 01',
+                  userName: diary.userDisplayName,
                   title: diary.title,
                   content: diary.content,
                   likeCount: diary.likeCount,
                   commentCount: diary.commentCount,
                   isPublic: diary.isPublic,
                   hashTags: diary.hashTags,
+                  createdAt: diary.createdAt,
                 );
               },
               separatorBuilder: (context, index) {

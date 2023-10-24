@@ -45,7 +45,7 @@ class SignInPageBloc extends Bloc<SignInPageEvent, SignInPageState> {
         return;
       }
 
-      if (await _authenticationRepository.useGoogleLogin(email)) {
+      if (await _authenticationRepository.isUseGoogleLogin(email)) {
         emit(const SignInStateShowErrorSnackBar(
             message: '구글 계정이 존재합니다. 구글 로그인을 이용하세요.'));
         return;

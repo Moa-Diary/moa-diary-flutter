@@ -3,21 +3,27 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:moa_diary_app/moa_diary_domain/moa_diary_domain.dart';
 
 class AuthenticationDataRepository extends AuthenticationRepository {
-  AuthenticationDataRepository({required FirebaseAuth authProvider})
-      : _authProvider = authProvider,
+  AuthenticationDataRepository({
+    required FirebaseAuth firebaseAuthProvider,
+    required AuthenticationProvider authenticationProvider,
+  })  : _firebaseAuthProvider = firebaseAuthProvider,
+        _authenticationProvider = authenticationProvider,
         super() {
     _initializeFirebaseAuth();
   }
 
-  final FirebaseAuth _authProvider;
-  User? _currentUser;
+  final FirebaseAuth _firebaseAuthProvider;
+  final AuthenticationProvider _authenticationProvider;
+  UserDto? _currentUser;
 
   @override
-  User? get currentUser => _currentUser;
+  UserDto? get currentUser => _currentUser;
 
   void _initializeFirebaseAuth() {
-    _authProvider.authStateChanges().listen((User? user) {
-      _currentUser = user;
+    _firebaseAuthProvider.authStateChanges().listen((
+      User? user,
+    ) async {
+      _currentUser = await _authenticationProvider.fetchUser(user?.email ?? '');
     });
   }
 
@@ -26,7 +32,7 @@ class AuthenticationDataRepository extends AuthenticationRepository {
     required String email,
     required String password,
   }) async {
-    await _authProvider.signInWithEmailAndPassword(
+    await _firebaseAuthProvider.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
@@ -34,7 +40,7 @@ class AuthenticationDataRepository extends AuthenticationRepository {
 
   @override
   Future<void> logout() async {
-    await _authProvider.signOut();
+    await _firebaseAuthProvider.signOut();
   }
 
   @override
@@ -47,14 +53,36 @@ class AuthenticationDataRepository extends AuthenticationRepository {
       idToken: googleAuth?.idToken,
     );
 
-    await FirebaseAuth.instance.signInWithCredential(credential);
+    await _firebaseAuthProvider.signInWithCredential(credential);
   }
 
   @override
-  Future<bool> useGoogleLogin(String email) async {
+  Future<bool> isUseGoogleLogin(String email) async {
     List<String> providerList =
-        await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+        await _firebaseAuthProvider.fetchSignInMethodsForEmail(email);
 
     return providerList.contains(GoogleAuthProvider.GOOGLE_SIGN_IN_METHOD);
+  }
+
+  @override
+  Future<void> signUp({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    final response = await _firebaseAuthProvider.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    await _authenticationProvider.signUp(SignUpRequestDto(
+      userName: name,
+      userEmail: email,
+      firebaseUniqueKey: response.user?.uid ?? '',
+    ));
+  }
+
+  @override
+  Future<bool> checkEmailDuplication(String email) async {
+    return await _authenticationProvider.checkEmailDuplication(email);
   }
 }

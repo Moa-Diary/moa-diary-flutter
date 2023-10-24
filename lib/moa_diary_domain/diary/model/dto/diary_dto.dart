@@ -9,13 +9,15 @@ part 'diary_dto.g.dart';
 class DiaryDto extends Equatable {
   const DiaryDto({
     this.diaryId = -1,
+    this.userDisplayName = '',
+    this.userProfileImage = '',
     this.title = '',
     this.content = '',
     this.likeCount = 0,
     this.commentCount = 0,
     this.hashTags = const [],
     this.emotion = '',
-    this.createdAt = '',
+    this.createdAt = -1,
     this.isPublic = false,
     this.isAvailableComment = false,
     this.imageUrls = const [],
@@ -23,13 +25,15 @@ class DiaryDto extends Equatable {
   });
 
   final int diaryId;
+  final String userDisplayName;
+  final String userProfileImage;
   final String title;
   final String content;
   final int likeCount;
   final int commentCount;
   final List<String> hashTags;
   final String emotion;
-  final String createdAt;
+  final int createdAt;
   final bool isPublic;
   final bool isAvailableComment;
   final List<String> imageUrls;
@@ -38,6 +42,8 @@ class DiaryDto extends Equatable {
   @override
   List<Object?> get props => [
     diaryId,
+    userDisplayName,
+    userProfileImage,
     title,
     content,
     likeCount,

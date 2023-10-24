@@ -8,6 +8,8 @@ part of 'diary_dto.dart';
 
 DiaryDto _$DiaryDtoFromJson(Map<String, dynamic> json) => DiaryDto(
       diaryId: json['diaryId'] as int? ?? -1,
+      userDisplayName: json['userDisplayName'] as String? ?? '',
+      userProfileImage: json['userProfileImage'] as String? ?? '',
       title: json['title'] as String? ?? '',
       content: json['content'] as String? ?? '',
       likeCount: json['likeCount'] as int? ?? 0,
@@ -17,7 +19,7 @@ DiaryDto _$DiaryDtoFromJson(Map<String, dynamic> json) => DiaryDto(
               .toList() ??
           const [],
       emotion: json['emotion'] as String? ?? '',
-      createdAt: json['createdAt'] as String? ?? '',
+      createdAt: json['createdAt'] as int? ?? -1,
       isPublic: json['isPublic'] as bool? ?? false,
       isAvailableComment: json['isAvailableComment'] as bool? ?? false,
       imageUrls: (json['imageUrls'] as List<dynamic>?)
@@ -32,6 +34,8 @@ DiaryDto _$DiaryDtoFromJson(Map<String, dynamic> json) => DiaryDto(
 
 Map<String, dynamic> _$DiaryDtoToJson(DiaryDto instance) => <String, dynamic>{
       'diaryId': instance.diaryId,
+      'userDisplayName': instance.userDisplayName,
+      'userProfileImage': instance.userProfileImage,
       'title': instance.title,
       'content': instance.content,
       'likeCount': instance.likeCount,

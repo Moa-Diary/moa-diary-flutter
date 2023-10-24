@@ -10,3 +10,12 @@ abstract class DiaryListEvent extends Equatable {
 class DiaryListEventEntered extends DiaryListEvent {}
 
 class DiaryListEventFetchRequested extends DiaryListEvent {}
+
+class DiaryListEventTabChanged extends DiaryListEvent {
+  const DiaryListEventTabChanged({required this.type,});
+
+  final DiaryListType type;
+
+  @override
+  List<Object?> get props => [type];
+}

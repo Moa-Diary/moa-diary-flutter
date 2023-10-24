@@ -135,6 +135,15 @@ class _SignUpViewState extends State<SignUpView> {
       _isDuplicateChecked = true;
       _useEmailAvailable = state.useEmailAvailable;
     }
+    if (state is SignUpStateShowErrorSnackBar) {
+      ErrorSnackBar.show(context, state.message);
+    }
+    if (state is SignUpStateShowSuccessSnackBar) {
+      SuccessSnackBar.show(context, state.message);
+    }
+    if (state is SignUpStatePop) {
+      Navigator.pop(context);
+    }
   }
 
   void _onCompleteButtonPressed() {
@@ -148,7 +157,7 @@ class _SignUpViewState extends State<SignUpView> {
   }
 
   void _onDuplicateCheckButtonPressed() {
-    if (_isDuplicateChecked) {
+    if (!_isDuplicateChecked) {
       context.read<SignUpPageBloc>().add(SignUpEventDuplicateCheckButtonPressed(
             email: _emailTextController.text,
           ));

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:moa_diary_app/moa_diary_domain/diary/diary.dart';
+import 'package:moa_diary_app/src/page/logged_in/diary/list/enum/enum.dart';
 
 part 'diary_list_event.dart';
 
@@ -15,6 +16,7 @@ class DiaryListBloc extends Bloc<DiaryListEvent, DiaryListState> {
     required this.diaryRepository,
   }) : super(DiaryListInitial()) {
     on<DiaryListEventEntered>(_onEntered);
+    on<DiaryListEventTabChanged>(_onTabChanged);
   }
 
   final DiaryRepository diaryRepository;
@@ -27,17 +29,37 @@ class DiaryListBloc extends Bloc<DiaryListEvent, DiaryListState> {
       await _fetchDiaryList(
         emit,
         page: 0,
+        isMine: true,
       );
-    } catch (error, stack) {}
+    } catch (error, stack) {
+      print('hajin ${error.toString()}');
+    }
+  }
+
+  Future<void> _onTabChanged(
+    DiaryListEventTabChanged event,
+    Emitter<DiaryListState> emit,
+  ) async {
+    try {
+      final isMine = event.type.isMyDiary;
+
+      await _fetchDiaryList(
+        emit,
+        page: 0,
+        isMine: isMine,
+      );
+    } catch (error) {}
   }
 
   Future<void> _fetchDiaryList(
     Emitter<DiaryListState> emit, {
     required int page,
+    bool isMine = false,
   }) async {
     final result = await diaryRepository.fetchDiaryList(
       page: page,
       size: _diaryListSizePerPage,
+      isMine: isMine,
     );
 
     emit(DiaryListStateUpdateDiaryList(

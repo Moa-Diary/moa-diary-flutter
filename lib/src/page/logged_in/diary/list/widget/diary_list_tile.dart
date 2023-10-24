@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:moa_diary_app/common/common.dart';
+import 'package:intl/intl.dart';
 
 class DiaryListTile extends StatelessWidget {
-  const DiaryListTile({
+  DiaryListTile({
     Key? key,
+    this.userProfileImage = '',
     this.imageUrls = const [],
     this.userName = '',
     this.title = '',
@@ -12,8 +14,10 @@ class DiaryListTile extends StatelessWidget {
     this.commentCount = 0,
     this.isPublic = false,
     this.hashTags = const [],
+    this.createdAt = -1,
   }) : super(key: key);
 
+  final String userProfileImage;
   final List<String> imageUrls;
   final String userName;
   final String title;
@@ -22,6 +26,9 @@ class DiaryListTile extends StatelessWidget {
   final int commentCount;
   final bool isPublic;
   final List<String> hashTags;
+  final int createdAt;
+
+  final dateFormatter = DateFormat('MM월 dd일');
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +38,13 @@ class DiaryListTile extends StatelessWidget {
       ),
       padding: EdgeInsets.all(30),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               ProfileNetworkImage(
-                  src:
-                      'https://fujifilm-x.com/wp-content/uploads/2021/01/gfx100s_sample_04_thum-1.jpg'),
+                src: userProfileImage,
+              ),
               SizedBox(
                 width: 12,
               ),
@@ -111,7 +119,7 @@ class DiaryListTile extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                '4월 16일',
+                dateFormatter.format(DateTime.fromMillisecondsSinceEpoch(createdAt)),
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 14,

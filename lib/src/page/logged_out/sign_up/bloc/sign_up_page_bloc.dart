@@ -30,12 +30,55 @@ class SignUpPageBloc extends Bloc<SignUpPageEvent, SignUpPageState> {
     SignUpEventDuplicateCheckButtonPressed event,
     Emitter<SignUpPageState> emit,
   ) async {
-    emit(SignUpStateInProgress());
-    emit(const SignUpStateDuplicateCheckSuccess(useEmailAvailable: true));
+    try {
+      emit(SignUpStateInProgress());
+
+      final isEmailAvailable =
+          await _authenticationRepository.checkEmailDuplication(
+        event.email,
+      );
+
+      emit(SignUpStateDuplicateCheckSuccess(useEmailAvailable: isEmailAvailable));
+    } catch (error) {
+      print('hajin ${error.toString()}');
+    }
   }
 
   Future<void> _onCompleteButtonPressed(
     SignUpEventCompleteButtonPressed event,
     Emitter<SignUpPageState> emit,
-  ) async {}
+  ) async {
+    try {
+      emit(SignUpStateInProgress());
+
+      if (event.name.isEmpty) {
+        emit(SignUpStateShowErrorSnackBar(message: '이름을 입력해주세요!'));
+        return;
+      }
+
+      if (event.email.isEmpty) {
+        emit(SignUpStateShowErrorSnackBar(message: '이메일을 입력해주세요!'));
+        return;
+      }
+
+      if (!event.isDuplicateChecked) {
+        emit(SignUpStateShowErrorSnackBar(message: '이메일 중복체크를 해주세요!'));
+        return;
+      }
+
+      if (event.password != event.passwordConfirm) {
+        emit(SignUpStateShowErrorSnackBar(message: '비밀번호가 일치하지 않습니다!'));
+        return;
+      }
+
+      await _authenticationRepository.signUp(
+        name: event.name,
+        password: event.password,
+        email: event.email,
+      );
+
+      emit(SignUpStateShowSuccessSnackBar(message: '회원가입에 성공하였습니다!'));
+      emit(SignUpStatePop());
+    } catch (error) {}
+  }
 }
